@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('thumbnail_service', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
+            $table->foreignId('service_id')->nullable()
+                ->index('fk_thumbnail_service_to_service');
+            $table->text('thumbnail');
+
+            $table->foreign('service_id', 'fk_thumbnail_service_to_service')
+                ->references('id')->on('service')
+                ->onUpdate('CASCADE')
+                ->onUpdate('CASCADE');
 
             $table->softDeletes();
             $table->timestamps();
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('thumbnail_service');
     }
 };
