@@ -83,9 +83,9 @@ class LandingController extends Controller
         //
     }
 
-    public function explor()
+    public function explore()
     {
-        return view('pages.landing.explor');
+        return view('pages.landing.explore');
     }
 
     public function detail($id)
