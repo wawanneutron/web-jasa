@@ -186,7 +186,7 @@
                         </table>
                     </div>
                     <div class="px-4 pb-4 booking">
-                        <a href="success.php?auth" class="block px-12 py-4 my-2 text-lg font-semibold text-center text-white bg-serv-button rounded-xl">
+                        <a href="{{ route('booking.landing', 1) }}" class="block px-12 py-4 my-2 text-lg font-semibold text-center text-white bg-serv-button rounded-xl">
                             Booking Now
                         </a>
                     </div>

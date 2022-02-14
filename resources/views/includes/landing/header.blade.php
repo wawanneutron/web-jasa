@@ -2,7 +2,7 @@
     class="h-full w-full border-box transition-all duration-500 linear lg:px-16 md:px-20 px-8 py-8 bg-white">
     <div class="navbar-1-1" style="font-family: 'Poppins', sans-serif">
         <div class=" mx-auto flex flex-wrap flex-row items-center justify-between">
-            <a href="index.php" class="flex text-3xl font-bold items-center">
+            <a href="{{ route('index') }}" class="flex text-3xl font-bold items-center">
                 SERV
             </a>
             <label for="menu-toggle" class="cursor-pointer lg:hidden block">
