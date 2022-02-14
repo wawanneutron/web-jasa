@@ -95,7 +95,7 @@ class LandingController extends Controller
 
     public function booking($id)
     {
-        // 
+        return view('pages.landing.booking');
     }
 
     public function detail_booking($id)
