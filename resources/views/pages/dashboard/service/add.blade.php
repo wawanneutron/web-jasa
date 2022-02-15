@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Service')
+@section('title', 'Add Service')
 @section('content')
     <main class="h-full overflow-y-auto">
         <div class="container mx-auto">
             <div class="grid w-full gap-5 px-10 mx-auto md:grid-cols-12">
                 <div class="col-span-12">
                     <h2 class="mt-8 mb-1 text-2xl font-semibold text-gray-700">
-                        Edit Your Service
+                        Add Your Service
                     </h2>
                     <p class="text-sm text-gray-400">
                         Upload the services you provide
@@ -25,7 +25,7 @@
                     </svg>
                 </li>
                 <li class="flex items-center">
-                    <a href="#" class="font-medium">Edit Your Service</a>
+                    <a href="#" class="font-medium">Add Your Service</a>
                 </li>
             </ol>
         </nav>
@@ -113,7 +113,7 @@
                                         Cancel
                                     </button>
                                     <button type="submit" class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                        Update Service
+                                        Create Service
                                     </button>
                                 </div>
                             </div>

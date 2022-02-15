@@ -3,7 +3,7 @@
 
 <head>
     @include('includes.dashboard.meta')
-    <title>@yield('title') | Dashboard</title>
+    <title>@yield('title') | {{ config('app.name') }}</title>
     {{-- style --}}
     @stack('before-style')
     @include('includes.dashboard.style')
