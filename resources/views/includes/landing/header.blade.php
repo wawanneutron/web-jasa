@@ -39,9 +39,10 @@
                                 Dashboard
                             </a>
                             <a href="#" class="block px-4 py-2 mt-2 text-sm bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
-                                Logout
-                                <form action="{{ route('logout') }}" method="post" id="logout-form">
+                                onclick="logout()">Logout
+                                <form action="{{ route('logout') }}" method="post" id="form-logout">
+                                    {{-- bisa menggunakan input value:hidden atau @csrf nya laravel --}}
+                                    {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}} 
                                     @csrf
                                 </form>
                             </a>
@@ -67,3 +68,12 @@
         </div>
     </div>
 </section>
+
+<script>
+    function logout() {
+        const check = confirm('Do you wont to logout?')
+        if (check) {
+            document.getElementById('form-logout').submit()
+        }
+    }
+</script>
