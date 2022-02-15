@@ -32,7 +32,7 @@
                 <div class="flex items-center justify-between">
                     <div class="inline-block text-xs text-gray-400">
                         <label class="inline-flex items-center mt-3">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-serv-button rounded border-serv-text"><span class="ml-2 text-gray-400">Remember me</span>
+                            <input type="checkbox" name="remember" class="form-checkbox h-5 w-5 text-serv-button rounded border-serv-text"><span class="ml-2 text-gray-400">Remember me</span>
                         </label>
                     </div>
                     <a class="inline-block align-baseline text-xs text-serv-button mt-2 font-medium" href="#">
