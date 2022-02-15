@@ -69,11 +69,13 @@
     </div>
 </section>
 
-<script>
-    function logout() {
-        const check = confirm('Do you wont to logout?')
-        if (check) {
-            document.getElementById('form-logout').submit()
+@push('after-script')
+    <script>
+        function logout() {
+            const check = confirm('Do you wont to logout?')
+            if (check) {
+                document.getElementById('form-logout').submit()
+            }
         }
-    }
-</script>
+    </script>
+@endpush
