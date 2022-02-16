@@ -196,3 +196,18 @@
     </section>
     <div class="pt-6 pb-20 mx-8 lg:mx-20"></div>
 @endsection
+
+@push('after-script')
+    <script>
+        function gallery() {
+            return {
+                featured: 'https://source.unsplash.com/_SgRNwAVNKw/1600x900/',
+                active: 1,
+                changeThumbnail: function(url, position) {
+                    this.featured = url;
+                    this.active = position;
+                }
+            }
+        }
+    </script>
+@endpush
