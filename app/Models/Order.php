@@ -17,7 +17,7 @@ class Order extends Model
     ];
 
     protected $fillable = [
-        'users_id', 'freelancer_id', 'buyer_id', 'order_status_id',
+        'users_id', 'service_id',  'freelancer_id', 'buyer_id', 'order_status_id',
         'file', 'note', 'expired'
     ];
 
