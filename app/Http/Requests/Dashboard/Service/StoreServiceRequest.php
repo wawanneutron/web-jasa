@@ -27,7 +27,7 @@ class StoreServiceRequest extends FormRequest
             'title'  =>  ['required', 'string', 'max:255'],
             'description'  =>  ['nullable', 'string', 'max:5000'],
             'delivery_time'  =>  ['required', 'integer', 'max:100'],
-            'revision_time'  =>  ['required', 'integer', 'max:100'],
+            'revision_limit'  =>  ['required', 'integer', 'max:100'],
             'price'  =>  ['required', 'string'],
             'note'  =>  ['nullable', 'string', 'max:5000'],
         ];
