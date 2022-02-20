@@ -27,8 +27,9 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $service = Service::whereUsersId(Auth::user()->id)->latest()->get();
-        return view('pages.dashboard.service.index', compact('service'));
+        $services = Service::whereUsersId(Auth::user()->id)->latest()->get();
+
+        return view('pages.dashboard.service.index', compact('services'));
     }
 
     /**
@@ -73,10 +74,11 @@ class ServiceController extends Controller
         // add to thumbnail service
         if ($request->hasFile('thumbnail')) {
             foreach ($request['thumbnail'] as $file) {
-                $path = $file->store('asset/service/thumbnail', 'public');
+                $path = $file->store('assets/service/thumbnail', 'public');
                 $thumbnail_service = new ThumbnailService;
                 $thumbnail_service->service_id = $service['id'];
                 $thumbnail_service->thumbnail = $path;
+                $thumbnail_service->save();
             }
         }
 
@@ -135,19 +137,18 @@ class ServiceController extends Controller
     public function update(UpdateServiceRequest $request, Service $service)
     {
         $data = $request->all();
-        // update to service
         $service->update($data);
 
         // update to advantage service
-        foreach ($data['advantage-service'] as $key => $value) {
+        foreach ($data['advantage-services'] as $key => $value) {
             $advantage_service = AdvantageService::find($key);
             $advantage_service->advantage = $value;
             $advantage_service->save();
         }
         // add new advantage service
         if (isset($data['advantage-service'])) {
-            foreach ($data['advantage-service'] as $key => $value) {
-                $advantage_service = AdvantageService::find($key);
+            foreach ($data['advantage-service'] as $value) {
+                $advantage_service = new AdvantageService;
                 $advantage_service->service_id = $service->id;
                 $advantage_service->advantage = $value;
                 $advantage_service->save();
@@ -155,15 +156,15 @@ class ServiceController extends Controller
         }
 
         // update to advantage user
-        foreach ($data['advantage-user'] as $key => $value) {
+        foreach ($data['advantage-users'] as $key => $value) {
             $advantage_user = AdvantageUser::find($key);
             $advantage_user->advantage = $value;
             $advantage_user->save();
         }
         // add new advantage user
         if (isset($data['advantage-user'])) {
-            foreach ($data['advantage-user'] as $key => $value) {
-                $advantage_user = AdvantageUser::find($key);
+            foreach ($data['advantage-user'] as $value) {
+                $advantage_user = new AdvantageUser;
                 $advantage_user->service_id = $service->id;
                 $advantage_user->advantage = $value;
                 $advantage_user->save();
@@ -171,7 +172,7 @@ class ServiceController extends Controller
         }
 
         // update to tagline
-        foreach ($data['tagline'] as $key => $value) {
+        foreach ($data['taglines'] as $key => $value) {
             $tagline = Tagline::find($key);
             $tagline->tagline = $value;
             $tagline->save();
@@ -179,7 +180,7 @@ class ServiceController extends Controller
         // add new tagline
         if (isset($data['tagline'])) {
             foreach ($data['tagline'] as $key => $value) {
-                $tagline = Tagline::find($key);
+                $tagline = new Tagline;
                 $tagline->service_id = $service->id;
                 $tagline->tagline = $value;
                 $tagline->save();
@@ -189,15 +190,16 @@ class ServiceController extends Controller
         // update to thumbnail service
         if ($request->hasFile('thumbnails')) {
             foreach ($request->file('thumbnails') as $key => $file) {
+                // ambil data berdasarkan id untuk mendapatkan photo nya
                 $get_photo = ThumbnailService::whereId($key)->first();
                 // store photo
                 $path = $file->store('assets/service/thumbnail', 'public');
-                // update thumbnail
+                // update dengan id yang sama dengan $key thumbnail
                 $thumbnail_service = ThumbnailService::find($key);
                 $thumbnail_service->thumbnail = $path;
                 $thumbnail_service->save();
                 // delete old photo thumbnail
-                $data = 'storage/' . $get_photo['photo'];
+                $data = 'storage/' . $get_photo['thumbnail'];
                 if (File::exists($data)) {
                     File::delete($data);
                 } else {
