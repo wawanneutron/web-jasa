@@ -27,7 +27,7 @@ class ProfileController extends Controller
     {
         $user = User::whereId(Auth::user()->id)->first();
         $experiences = ExperienceUser::where('detail_user_id', $user->detail_user->id)
-            ->orderBy('id', 'desc')
+            ->orderBy('id', 'asc')
             ->get();
 
         return view('pages.dashboard.profile', compact('user', 'experiences'));
@@ -83,12 +83,11 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(
-        UpdateProfileRequest $request_profile,
-        UpdateDetailUserRequest $request_detail_user
-    ) {
-        $data_profile       = $request_profile->all();
-        $data_detail_user   = $request_detail_user->all();
+    public function update(UpdateProfileRequest $request_profile, UpdateDetailUserRequest $request_detail_user)
+    {
+        $data_profile = $request_profile->all();
+        $data_detail_user = $request_detail_user->all();
+
         // get id user sedang login
         $get_photo = DetailUser::whereUsersId(Auth::user()->id)->first();
         // hapus file gambar lama dari storage
