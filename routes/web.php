@@ -40,7 +40,7 @@ Route::group(
         Route::get('reject/order/{id}', [MyOrderController::class, 'rejected'])->name('reject.order');
         Route::resource('order', MyOrderController::class);
         // profile
-        Route::delete('delete_photo', [ProfileController::class, 'delete'])->name('delete.photo.profile');
+        Route::get('delete_photo', [ProfileController::class, 'delete'])->name('delete.photo.profile');
         Route::resource('profile', ProfileController::class);
     }
 );
