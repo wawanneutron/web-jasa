@@ -25,10 +25,13 @@ class UpdateDetailUserRequest extends FormRequest
     {
         return [
             'photo'  =>  [
-                'required', 'image', 'mimes:jpeg,png,jpg', 'max:1024'
+                'image', 'mimes:jpeg,png,jpg', 'max:1024'
             ],
             'role'  =>  [
-                'nullable', 'regex:/^([0-9\s\-\+\(\)\]*)$/', 'max:12'
+                'nullable', 'required', 'max:100'
+            ],
+            'contact_number'  =>  [
+                'nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'max:12'
             ],
             'biography' => [
                 'nullable', 'string', 'max:5000'
