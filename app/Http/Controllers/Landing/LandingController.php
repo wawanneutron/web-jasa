@@ -97,7 +97,7 @@ class LandingController extends Controller
         return view('pages.landing.explore', compact('services'));
     }
 
-    public function detail($id)
+    public function detail($title, $id)
     {
         $service = Service::where('id', $id)->first();
         $thumbnail = ThumbnailService::where('service_id', $id)->get();

@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('detail_booking/{id}', [LandingController::class, 'detail_booking'])->name('detail.booking.landing');
 Route::get('booking/{id}', [LandingController::class, 'booking'])->name('booking.landing');
-Route::get('detail/{id}', [LandingController::class, 'detail'])->name('detail.landing');
+Route::get('detail/{title}/{id}', [LandingController::class, 'detail'])->name('detail.landing');
 Route::get('explore', [LandingController::class, 'explore'])->name('explore.landing');
 Route::resource('/', LandingController::class);
 

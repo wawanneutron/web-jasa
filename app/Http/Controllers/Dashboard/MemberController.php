@@ -20,7 +20,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $order = Order::where('freelancer_id', Auth::user()->id)->latest()->get();
+        $orders = Order::where('freelancer_id', Auth::user()->id)->latest()->get();
         $progress = Order::where('freelancer_id', Auth::user()->id)
             ->where('order_status_id', 2)
             ->count();
@@ -32,7 +32,7 @@ class MemberController extends Controller
             ->distinct('freelancer_id')
             ->count();
         return view('pages.dashboard.index', compact(
-            'order',
+            'orders',
             'progress',
             'completed',
             'freelancer'
