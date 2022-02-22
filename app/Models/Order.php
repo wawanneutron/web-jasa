@@ -17,7 +17,7 @@ class Order extends Model
     ];
 
     protected $fillable = [
-        'users_id', 'service_id',  'freelancer_id', 'buyer_id', 'order_status_id',
+        'service_id',  'freelancer_id', 'buyer_id', 'order_status_id',
         'file', 'note', 'expired'
     ];
 
@@ -39,6 +39,6 @@ class Order extends Model
 
     public function order_status()
     {
-        return $this->belongsTo(Order::class, 'order_status_id', 'id');
+        return $this->belongsTo(OrderStatus::class, 'order_status_id', 'id');
     }
 }
