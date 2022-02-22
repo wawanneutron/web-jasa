@@ -22,11 +22,12 @@
                             <img src="{{ Storage::url(auth()->user()->detail_user()->first()->photo) }}" alt="photo profile" class="inline w-12 h-12 mr-3 rounded-full">
                                 Halo, {{ auth()->user()->name }}
                         @else
-                            <span class="inline-block w-16 h-16 overflow-hidden bg-gray-100 rounded-full">
+                            <span class="inline-block w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
                                 <svg class="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                                 </svg>
                             </span>
+                            Halo, {{ auth()->user()->name }}
                         @endif
                         </button>
                     </div>
@@ -83,25 +84,32 @@
                                 {{ count($orders) }} Total Orders On Progress
                             </p>
                         </div>
-                        @forelse ($orders as $order)
-                            <table class="w-full mt-4" aria-label="Table">
-                                <thead>
-                                    <tr class="text-sm font-normal text-left text-gray-900 border-b border-b-gray-600">
-                                        <th class="py-4" scope="">Name</th>
-                                        <th class="py-4" scope="">Services Name</th>
-                                        <th class="py-4" scope="">Deadline</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white">
+                        <table class="w-full mt-4" aria-label="Table">
+                            <thead>
+                                <tr class="text-sm font-normal text-left text-gray-900 border-b border-b-gray-600">
+                                    <th class="py-4" scope="">Name</th>
+                                    <th class="py-4" scope="">Services Name</th>
+                                    <th class="py-4" scope="">Deadline</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                @forelse ($orders as $order)
                                     <tr class="text-gray-700">
                                         <td class="w-1/3 px-1 py-5">
                                             <div class="flex items-center text-sm">
                                                 <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                    <img class="object-cover w-full h-full rounded-full" src="https://randomuser.me/api/portraits/men/2.jpg" alt="" loading="lazy" />
-                                                    <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                                    @if (isset($order->user_buyer->detail_user->photo))
+                                                        <img class="object-cover w-full h-full rounded-full" src="{{ Storage::url($order->user_buyer->detail_user->photo) }}" alt="" loading="lazy" />
+                                                    @else
+                                                        <span class="object-cover w-full h-full rounded-full">
+                                                            <svg class="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                            </svg>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                                 <div>
-                                                    <p class="font-medium text-black">{{ $order->user->name }}</p>
+                                                    <p class="font-medium text-black">{{ $order->user_buyer->name }}</p>
                                                     @switch($order->order_status->id)
                                                         @case(1)
                                                             <p class="text-sm text-yellow-400">{{ $order->order_status->name }}</p>
@@ -141,23 +149,23 @@
                                                 <path d="M7.0002 12.8332C10.2219 12.8332 12.8335 10.2215 12.8335 6.99984C12.8335 3.77818 10.2219 1.1665 7.0002 1.1665C3.77854 1.1665 1.16687 3.77818 1.16687 6.99984C1.16687 10.2215 3.77854 12.8332 7.0002 12.8332Z" stroke="#F26E6E" stroke-linecap="round" stroke-linejoin="round" />
                                                 <path d="M7 3.5V7L9.33333 8.16667" stroke="#F26E6E" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>
-                                            
-                                            {{ \Carbon\Carbon::create($order->expired)->format('F d, Y') }}
+                                            {{ date('M d, y', strtotime($order->expired)) }}
+                                            {{-- {{ \Carbon\Carbon::create($order->expired)->format('F d, Y') }} --}}
                                         </td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        @empty
-                            <div class="m-auto mt-5 text-center">
-                                <img src="{{ asset('/assets/images/empty-illustration.svg') }}" alt="" class="w-15 mx-auto">
-                                <h2 class="mt-8 mb-1 text-2sm font-semibold text-gray-700">
-                                    There is No Order Yet
-                                </h2>
-                                <p class="text-xs text-gray-400">
-                                Looks like no orders have come in yet
-                                </p>
-                            </div>
-                        @endforelse
+                                @empty
+                                    <div class="m-auto mt-5 text-center">
+                                        <img src="{{ asset('/assets/images/empty-illustration.svg') }}" alt="" class="w-15 mx-auto">
+                                        <h2 class="mt-8 mb-1 text-2sm font-semibold text-gray-700">
+                                            There is No Order Yet
+                                        </h2>
+                                        <p class="text-xs text-gray-400">
+                                        Looks like no orders have come in yet
+                                        </p>
+                                    </div>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </main>
                 <aside class="p-4 lg:col-span-5 md:col-span-12 md:pt-0">

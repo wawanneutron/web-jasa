@@ -51,7 +51,7 @@
                                                         @endif
                                                     </div>
                                                     <div>
-                                                        <a href="{{ route('member.service.show', $service->id) }}" class="font-medium text-black">
+                                                        <a href="{{ route('detail.landing', [Str::slug($service->title), $service->id]) }}" class="font-medium text-black">
                                                             {{ $service->title ?? '' }}
                                                         </a>
                                                     </div>
