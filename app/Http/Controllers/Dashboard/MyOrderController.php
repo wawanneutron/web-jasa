@@ -9,6 +9,7 @@ use App\Models\AdvantageUser;
 use App\Models\Order;
 use App\Models\Service;
 use App\Models\Tagline;
+use App\Models\ThumbnailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -61,14 +62,18 @@ class MyOrderController extends Controller
         $service = Service::whereId($order['service_id'])->first();
         $advantage_service = AdvantageService::whereServiceId($order['service_id'])->get();
         $advantage_user = AdvantageUser::whereServiceId($order['service_id'])->get();
+        $thumbnail = ThumbnailService::whereServiceId($service->id)->get();
         $tagline = Tagline::whereServiceId($order['service_id'])->get();
+        $services = Service::whereUsersId(Auth::user()->id)->get();
 
         return view('pages.dashboard.order.detail', compact(
             'order',
             'service',
             'advantage_service',
             'advantage_user',
-            'tagline'
+            'thumbnail',
+            'tagline',
+            'services'
         ));
     }
 
@@ -78,8 +83,9 @@ class MyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($id)
     {
+        $order = Order::whereFreelancerId(Auth::user()->id)->findOrFail($id);
         return view('pages.dashboard.order.edit', compact('order'));
     }
 
@@ -93,14 +99,15 @@ class MyOrderController extends Controller
     public function update(UpdateMyOrderRequest $request, Order $order)
     {
         $data = $request->all();
-        if (isset($data['file'])) {
+
+        if ($request->hasFile('file')) {
             $path = $request->file('file')
                 ->store('assets/order/attachment', 'public');
+            $order = Order::find($order->id);
+            $order->file = $path;
+            $order->note = $data['note'];
+            $order->save();
         }
-        $order = Order::find($order->id);
-        $order->file = $path;
-        $order->note = $data['note'];
-        $order->save();
 
         toast()->success('Submit order has been success');
         return redirect()->route('member.order.index');
@@ -117,9 +124,19 @@ class MyOrderController extends Controller
         return abort(404);
     }
 
+    public function waiting($id)
+    {
+        $order = Order::whereFreelancerId(Auth::user()->id)->findOrFail($id);
+        $order->order_status_id = 4;
+        $order->save();
+
+        toast()->success('Accept order has been success');
+        return back();
+    }
+
     public function accepted($id)
     {
-        $order = Order::find($id);
+        $order = Order::whereFreelancerId(Auth::user()->id)->findOrFail($id);
         $order->order_status_id = 2;
         $order->save();
 
@@ -129,7 +146,7 @@ class MyOrderController extends Controller
 
     public function rejected($id)
     {
-        $order = Order::find($id);
+        $order = Order::whereFreelancerId(Auth::user()->id)->findOrFail($id);
         $order->order_status_id = 3;
         $order->save();
 

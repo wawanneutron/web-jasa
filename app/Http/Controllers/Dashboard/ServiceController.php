@@ -111,7 +111,7 @@ class ServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Service $service)
+    public function edit($id)
     {
         $service = Service::whereUsersId(Auth::user()->id)->findOrFail($id);
         $advantage_service = AdvantageService::whereServiceId($service->id)->get();
