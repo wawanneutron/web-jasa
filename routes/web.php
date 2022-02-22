@@ -36,6 +36,7 @@ Route::group(
         Route::get('approve_request/{id}', [RequestController::class, 'approve'])->name('approve.request');
         Route::resource('request', RequestController::class);
         // my order
+        Route::get('waiting/order/{id}', [MyOrderController::class, 'waiting'])->name('waiting.order');
         Route::get('accept/order/{id}', [MyOrderController::class, 'accepted'])->name('accept.order');
         Route::get('reject/order/{id}', [MyOrderController::class, 'rejected'])->name('reject.order');
         Route::resource('order', MyOrderController::class);
