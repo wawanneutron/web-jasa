@@ -55,8 +55,10 @@ class RequestController extends Controller
     public function show($id)
     {
         // detail
-        $order = Order::whereId($id)->first();
-        return view('pages.dashboard.request.detail', compact('order'));
+        $order = Order::whereId($id)->whereBuyerId(Auth::user()->id)->firstOrFail();
+        $orders = Order::whereBuyerId(Auth::user()->id)->latest()->get(); //untuk menghitung jumlah request dengan count
+
+        return view('pages.dashboard.request.detail', compact('order', 'orders'));
     }
 
     /**
