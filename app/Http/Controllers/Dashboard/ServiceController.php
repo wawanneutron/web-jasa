@@ -113,6 +113,7 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
+        $service = Service::whereUsersId(Auth::user()->id)->findOrFail($id);
         $advantage_service = AdvantageService::whereServiceId($service->id)->get();
         $advantage_user = AdvantageUser::whereServiceId($service->id)->get();
         $thumbnail_service = ThumbnailService::whereServiceId($service->id)->get();
